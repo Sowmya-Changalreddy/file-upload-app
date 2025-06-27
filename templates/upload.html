@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>File Upload App</title>
+    <style>
+        body {
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #f9fafb;
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+h2, h3 {
+    color: #444;
+}
+form {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    width: 100%;
+    max-width: 600px;
+    margin-bottom: 30px;
+}
+label {
+    font-weight: bold;
+}
+input[type="file"],
+textarea {
+    width: 100%;
+    padding: 10px;
+    margin-top: 8px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+}
+input[type="submit"] {
+    background-color: #6c8ebf;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+input[type="submit"]:hover {
+    background-color: #5a7aa3;
+}
+table {
+    width: 100%;
+    max-width: 900px;
+    background-color: white;
+    border-collapse: collapse;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 40px;
+}
+th, td {
+    padding: 12px 15px;
+    border-bottom: 1px solid #eee;
+}
+th {
+    background-color: #6c8ebf;
+    color: white;
+    text-align: left;
+}
+tr:hover {
+    background-color: #f2f4f7;
+}
+a {
+    color: #6c8ebf;
+    text-decoration: none;
+    font-weight: bold;
+}
+a:hover {
+    text-decoration: underline;
+}
+
+    </style>
+</head>
+<body>
+    <h2>Upload a File</h2>
+    <form method="POST" enctype="multipart/form-data">
+        <label for="file">Select File:</label>
+        <input type="file" name="file" required>
+
+        <label for="description">Description:</label>
+        <textarea name="description" rows="4" placeholder="Describe your file..." required></textarea>
+
+        <input type="submit" value="Upload">
+    </form>
+
+    <h3>Uploaded Files</h3>
+    {% if files %}
+    <table>
+        <thead>
+            <tr>
+                <th>Filename</th>
+                <th>Extension</th>
+                <th>Upload Date</th>
+                <th>Description</th>
+                <th>Download</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for file in files %}
+            <tr>
+                <td>{{ file[0] }}</td>
+                <td>{{ file[1] }}</td>
+                <td>{{ file[2] }}</td>
+                <td>{{ file[3] }}</td>
+                <td><a href="/uploads/{{ file[0] }}" download>Download</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+        <p>No files uploaded yet.</p>
+    {% endif %}
+</body>
+</html>
